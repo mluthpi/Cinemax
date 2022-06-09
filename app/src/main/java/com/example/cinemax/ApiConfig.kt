@@ -13,7 +13,7 @@ object ApiConfig {
             .addInterceptor(loggingInterceptor)
             .build()
         val retrofit = Retrofit.Builder()
-            .baseUrl("https://api.themoviedb.org/3/movie/550?api_key=")
+            .baseUrl("https://api.themoviedb.org/3/movie/550?api_key=/")
             .addConverterFactory(GsonConverterFactory.create())
             .client(client)
             .build()
