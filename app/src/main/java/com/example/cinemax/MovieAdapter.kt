@@ -7,15 +7,16 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.example.cinemax.data.ResultsItem
 import com.example.cinemax.databinding.ItemMovieBinding
 
 
-class MovieAdapter(val movie: (movieItem: MovieEntity) -> Unit) :
+class MovieAdapter(val movie: (movieItem: ResultsItem) -> Unit) :
     RecyclerView.Adapter<MovieAdapter.ViewHolder>(){
 
-    private val movieItemList = mutableListOf<MovieEntity>()
+    private val movieItemList = mutableListOf<ResultsItem>()
 
-    fun addItems(movieItemList: List<MovieEntity>) {
+    fun addItems(movieItemList: List<ResultsItem>) {
         this.movieItemList.clear()
         this.movieItemList.addAll(movieItemList)
         notifyDataSetChanged()
@@ -36,12 +37,12 @@ class MovieAdapter(val movie: (movieItem: MovieEntity) -> Unit) :
     override fun getItemCount(): Int = movieItemList.size
 
     inner class ViewHolder(private val binding: ItemMovieBinding) : RecyclerView.ViewHolder(binding.root){
-        fun bind(movieEntity: MovieEntity){
+        fun bind(movieEntity: ResultsItem){
             with(binding) {
                 Glide.with(binding.root)
-                    .load(movieEntity.logoPath)
+                    .load("https://image.tmdb.org/t/p/original${movieEntity.posterPath}")
                     .into(imgMovie)
-                tvName.text = movieEntity.name
+                tvName.text = movieEntity.title
             }
         }
     }

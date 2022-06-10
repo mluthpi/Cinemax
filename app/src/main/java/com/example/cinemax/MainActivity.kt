@@ -2,9 +2,12 @@ package com.example.cinemax
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.widget.Toast
+import android.util.Log
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.cinemax.data.MovieResponse
+import com.example.cinemax.data.ResultsItem
 import com.example.cinemax.databinding.ActivityMainBinding
+import com.example.cinemax.network.ApiConfig
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -18,28 +21,37 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
         supportActionBar?.title = "CINEMAX"
-        showMovie()
+
+        getMovies()
     }
 
-    private fun showMovie() {
+    private fun getMovies() {
+        ApiConfig.getApiService().getMovie(apiKey = "ba7b7ec258e912a3c68b34e6dfba3ca5").enqueue(
+            object : Callback<MovieResponse> {
+                override fun onResponse(
+                    call: Call<MovieResponse>,
+                    response: Response<MovieResponse>
+                ) {
+                    val data = response.body()
+                    val movies = data?.results
 
-        binding.rvMovies.setHasFixedSize(true)
-        binding.rvMovies.layoutManager = LinearLayoutManager(this)
+                    showMovie(movies!!)
+                }
 
-        ApiConfig.getApiService().getMovie().enqueue(object : Callback<List<MovieEntity>>{
-            override fun onResponse(
-                call: Call<List<MovieEntity>>,
-                response: Response<List<MovieEntity>>
-            ) {
-                val list = response.body()
-                val adapter = list.let { MovieAdapter(it) }
-                binding.rvMovies.adapter = adapter
-            }
+                override fun onFailure(call: Call<MovieResponse>, t: Throwable) {
+                }
 
-            override fun onFailure(call: Call<List<MovieEntity>>, t: Throwable) {
-                Toast.makeText(this@MainActivity,"${t.message}", Toast.LENGTH_SHORT).show()
-            }
-        })
+            })
+    }
+
+    private fun showMovie(movies: List<ResultsItem>) {
+        val movieAdapter = MovieAdapter {}
+
+        movieAdapter.addItems(movies)
+        binding.rvMovies.apply {
+            layoutManager = LinearLayoutManager(this@MainActivity)
+            adapter = movieAdapter
+        }
     }
 
 
