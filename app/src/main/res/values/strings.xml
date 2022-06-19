@@ -2,4 +2,10 @@
     <string name="app_name">CInemax</string>
     <string name="name">Name</string>
     <string name="descrtiption">descrtiption</string>
+    <string name="title">Title :</string>
+    <string name="the_title">the title</string>
+    <string name="overview">Overview :</string>
+    <string name="the_overview">the overview</string>
+    <string name="rating">rating</string>
+    <string name="avenger">AVENGER</string>
 </resources>

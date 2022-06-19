@@ -11,6 +11,6 @@ data class MovieEntity (
     @SerializedName("name")
     val name: String,
 
-    @SerializedName("logo_path")
-    val logoPath: String? = null
+    @SerializedName("poster_path")
+    val posterPath: String? = null
         )
