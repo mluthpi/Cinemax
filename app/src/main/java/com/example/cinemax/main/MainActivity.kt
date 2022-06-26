@@ -1,15 +1,19 @@
-package com.example.cinemax
+package com.example.cinemax.main
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuItem
 import android.view.View
-import androidx.activity.viewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.cinemax.R
+import com.example.cinemax.detail.MovieDetailsActivity
 import com.example.cinemax.data.MovieResponse
 import com.example.cinemax.data.ResultsItem
 import com.example.cinemax.databinding.ActivityMainBinding
+import com.example.cinemax.favorite.FavoriteActivity
 import com.example.cinemax.network.ApiConfig
 import retrofit2.Call
 import retrofit2.Callback
@@ -33,17 +37,13 @@ class MainActivity : AppCompatActivity() {
             this, ViewModelProvider.NewInstanceFactory()
         ).get(MainViewModel::class.java)
 
-        mainViewModel.isLoading.observe(this,{showLoading(it)})
 
-//        mainViewModel = ViewModelProvider(this).get(MainViewModel::class.java)
-//        mainViewModel.movie
-//        mainViewModel = ViewModelProvider(this).get(MainViewModel::class.java)
-//        mainViewModel.movieDetail
 
 
     }
 
     private fun getMovies() {
+        binding.progressbar.visibility = View.VISIBLE
         ApiConfig.getApiService().getMovie(apiKey = "ba7b7ec258e912a3c68b34e6dfba3ca5").enqueue(
             object : Callback<MovieResponse> {
                 override fun onResponse(
@@ -53,6 +53,7 @@ class MainActivity : AppCompatActivity() {
                     val data = response.body()
                     val movies = data?.results
                     showMovie(movies!!)
+                    binding.progressbar.visibility = View.GONE
                 }
 
                 override fun onFailure(call: Call<MovieResponse>, t: Throwable) {
@@ -77,8 +78,24 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun showLoading(isLoading:Boolean) {
-        binding.progressbar.visibility = if(isLoading) View.VISIBLE else View.GONE
+//    private fun showLoading(isLoading:Boolean) {
+//        binding.progressbar.visibility = if(isLoading) View.VISIBLE else View.GONE
+//    }
+
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
+        menuInflater.inflate(R.menu.menu_main, menu)
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            R.id.nav_favorite -> {
+                val intent = Intent(this, FavoriteActivity::class.java)
+                startActivity(intent)
+                return true
+            }
+            else -> return super.onOptionsItemSelected(item)
+        }
     }
 
     override fun onDestroy() {

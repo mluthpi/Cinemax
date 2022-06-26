@@ -3,9 +3,14 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/dicoding/CInemax/app/src/main/res/drawable/ic_baseline_favorite_border_24.xml" value="0.1" />
+        <entry key="..\:/dicoding/CInemax/app/src/main/res/drawable/main_menu.xml" value="0.1035" />
+        <entry key="..\:/dicoding/CInemax/app/src/main/res/layout/activity_favorite.xml" value="0.18425925925925926" />
         <entry key="..\:/dicoding/CInemax/app/src/main/res/layout/activity_main.xml" value="0.1872093023255814" />
         <entry key="..\:/dicoding/CInemax/app/src/main/res/layout/activity_movie_details.xml" value="0.18" />
         <entry key="..\:/dicoding/CInemax/app/src/main/res/layout/item_movie.xml" value="0.2" />
+        <entry key="..\:/dicoding/CInemax/app/src/main/res/layout/main_menu.xml" value="0.18425925925925926" />
+        <entry key="..\:/dicoding/CInemax/app/src/main/res/menu/menu_main.xml" value="0.18425925925925926" />
       </map>
     </option>
   </component>

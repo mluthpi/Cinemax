@@ -1,12 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="8dp"
     android:orientation="vertical"
-    tools:context=".MovieDetailsActivity">
+    tools:context=".detail.MovieDetailsActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+
+
 
     <ImageView
         android:id="@+id/img_detail"
@@ -67,6 +75,19 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:text="@string/rating" />
+    </LinearLayout>
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fb_favorite"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="right"
+        android:layout_marginTop="200dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="16dp"
+        android:backgroundTint="#999AA3"
+        android:src="@drawable/ic_baseline_favorite_border_24" />
+
 
     </LinearLayout>
-</LinearLayout>
+</ScrollView>

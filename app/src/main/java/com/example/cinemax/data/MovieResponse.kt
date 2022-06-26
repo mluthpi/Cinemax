@@ -73,3 +73,5 @@ data class Dates(
 	@field:SerializedName("minimum")
 	val minimum: String? = null
 )
+
+

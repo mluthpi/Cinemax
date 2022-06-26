@@ -15,7 +15,7 @@ interface ApiService {
 
     @GET("movie/{movie_id}")
     fun getDetails(
-        @Path("movie_id") id: Int,
+        @Path("movie_id") id: Int.Companion,
         @Query("api_key") apiKey: String
     ) : Call<MovieDetailResponse>
 }

@@ -1,4 +1,4 @@
-package com.example.cinemax
+package com.example.cinemax.main
 
 import android.util.Log
 import androidx.lifecycle.LiveData
@@ -10,7 +10,6 @@ import com.example.cinemax.network.ApiConfig
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import javax.xml.transform.Result
 
 class MainViewModel: ViewModel() {
 

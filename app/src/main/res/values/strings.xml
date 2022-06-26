@@ -8,4 +8,6 @@
     <string name="the_overview">the overview</string>
     <string name="rating">rating</string>
     <string name="avenger">AVENGER</string>
+    <string name="tidak_ada_favorite">Tidak ada favorite</string>
+    <string name="favorite">Favorite</string>
 </resources>

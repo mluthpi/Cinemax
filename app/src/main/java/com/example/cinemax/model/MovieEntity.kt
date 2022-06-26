@@ -1,4 +1,4 @@
-package com.example.cinemax
+package com.example.cinemax.model
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity
@@ -6,10 +6,11 @@ import androidx.room.PrimaryKey
 import com.google.gson.annotations.SerializedName
 
 
-@Entity(tableName = "movie")
+@Entity
 data class MovieEntity (
-    @SerializedName("name")
-    val name: String,
+    @PrimaryKey(autoGenerate = true)
+    @SerializedName("title")
+    val title: String,
 
     @SerializedName("poster_path")
     val posterPath: String? = null
