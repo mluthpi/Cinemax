@@ -8,8 +8,8 @@ import com.bumptech.glide.Glide
 import com.example.cinemax.R
 import com.example.cinemax.ViewModelFactory
 import com.example.cinemax.data.MovieDetailResponse
+import com.example.cinemax.data.ResultsItem
 import com.example.cinemax.databinding.ActivityMovieDetailsBinding
-import com.example.cinemax.model.MovieEntity
 import com.example.cinemax.network.ApiConfig
 import retrofit2.Call
 import retrofit2.Callback
@@ -29,6 +29,10 @@ class MovieDetailsActivity : AppCompatActivity() {
         getMovieDetails(id = id)
 
         setupViewModel()
+
+        detailsViewModel.detailMovie.observe(this, {movieDetails ->
+            showMovieDetail(movieDetails)
+        })
 
 
     }
@@ -62,7 +66,7 @@ class MovieDetailsActivity : AppCompatActivity() {
             })
     }
 
-   private fun showMovieDetail(movieDetailResponse: MovieEntity) {
+   private fun showMovieDetail(movieDetailResponse: MovieDetailResponse) {
        Glide.with(this)
            .load(movieDetailResponse.posterPath)
            .into(binding.imgDetail)
@@ -74,13 +78,13 @@ class MovieDetailsActivity : AppCompatActivity() {
        })
    }
 
-    private fun setupFavoriteMovie(isFavorite: Boolean, movie: MovieEntity) {
+    private fun setupFavoriteMovie(isFavorite: Boolean, movie: MovieDetailResponse) {
         if (isFavorite) {
             binding.fbFavorite.setImageResource(R.drawable.ic_baseline_favorited_24)
 
             binding.fbFavorite.setOnClickListener {
                 val movie = movie.title?.let { it1 ->
-                    MovieEntity(
+                    ResultsItem(
                         title = it1,
                         posterPath = movie.posterPath
                     )
@@ -94,7 +98,7 @@ class MovieDetailsActivity : AppCompatActivity() {
 
             binding.fbFavorite.setOnClickListener{
                 val movie = movie.title?.let { it1 ->
-                    MovieEntity(
+                    ResultsItem(
                         title = it1,
                         posterPath = movie.posterPath
                     )

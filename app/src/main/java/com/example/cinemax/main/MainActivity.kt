@@ -6,8 +6,10 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
+import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.example.cinemax.R
 import com.example.cinemax.detail.MovieDetailsActivity
 import com.example.cinemax.data.MovieResponse
@@ -23,7 +25,13 @@ class MainActivity : AppCompatActivity() {
 
     private var _binding: ActivityMainBinding? = null
     private val binding get() = _binding!!
-//    private lateinit var mainViewModel: MainViewModel
+
+//    private val mainAdapter = MovieAdapter {
+//        val intent = Intent(this, MovieDetailsActivity::class.java)
+//        intent.putExtra("KEY_ID", it.id)
+//        startActivity(intent)
+//    }
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -39,8 +47,11 @@ class MainActivity : AppCompatActivity() {
 
 
 
-
+        mainViewModel.movie.observe(this, {listMovie ->
+            showMovie(listMovie)
+        })
     }
+
 
     private fun getMovies() {
         binding.progressbar.visibility = View.VISIBLE
@@ -63,10 +74,21 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun showMovie(movies: List<ResultsItem>?) {
+//        if (movies != null) {
+//            mainAdapter.addItems(movies)
+//        }
+//
+//        binding.rvMovies.apply {
+//            layoutManager = LinearLayoutManager(
+//                this@MainActivity, RecyclerView.VERTICAL, false
+//            )
+//            adapter = mainAdapter
+//        }
         val movieAdapter = MovieAdapter {
             val intent = Intent(this, MovieDetailsActivity::class.java)
             intent.putExtra("KEY_ID", it.id)
             startActivity(intent)
+            Toast.makeText(this, "JENGJET", Toast.LENGTH_SHORT).show()
         }
 
         if (movies != null) {
@@ -78,9 +100,7 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-//    private fun showLoading(isLoading:Boolean) {
-//        binding.progressbar.visibility = if(isLoading) View.VISIBLE else View.GONE
-//    }
+
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         menuInflater.inflate(R.menu.menu_main, menu)

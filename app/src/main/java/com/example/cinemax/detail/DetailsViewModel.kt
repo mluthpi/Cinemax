@@ -6,7 +6,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.cinemax.data.MovieDetailResponse
-import com.example.cinemax.model.MovieEntity
+import com.example.cinemax.data.ResultsItem
 import com.example.cinemax.model.MovieRepository
 import com.example.cinemax.network.ApiConfig
 import retrofit2.Call
@@ -53,13 +53,13 @@ class DetailsViewModel(application: Application): ViewModel() {
         })
     }
 
-    fun insertToDB(movie: MovieEntity){
+    fun insertToDB(movie: MovieDetailResponse){
         mMovieRepository.insert(movie)
     }
 
-    fun deleteFromDB(movie: MovieEntity) {
+    fun deleteFromDB(movie: MovieDetailResponse) {
         mMovieRepository.delete(movie)
     }
-    fun getFavoriteMovie() : LiveData<List<MovieEntity>> = mMovieRepository.getAllMovie()
+    fun getFavoriteMovie() : LiveData<List<ResultsItem>> = mMovieRepository.getAllMovie()
 
 }
