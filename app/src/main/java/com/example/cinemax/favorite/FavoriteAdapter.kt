@@ -12,7 +12,7 @@ class FavoriteAdapter(private val onItemClick: (item: ResultsItem)-> Unit) : Rec
 
     private val movieItemList = mutableListOf<ResultsItem>()
 
-    fun addItems(movieItemList: List<MovieEntity>){
+    fun addItems(movieItemList: List<ResultsItem>){
         this.movieItemList.clear()
         this.movieItemList.addAll(movieItemList)
         notifyDataSetChanged()

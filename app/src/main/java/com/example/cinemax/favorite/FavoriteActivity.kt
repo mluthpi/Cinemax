@@ -9,6 +9,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.cinemax.ViewModelFactory
+import com.example.cinemax.data.ResultsItem
 import com.example.cinemax.databinding.ActivityFavoriteBinding
 import com.example.cinemax.detail.MovieDetailsActivity
 import com.example.cinemax.model.MovieEntity
@@ -36,7 +37,7 @@ class FavoriteActivity : AppCompatActivity() {
         setupViewModel()
 
         favoriteViewModel.getFavoriteMovie().observe(this, {
-            showFavoriteMovie(it)
+//            showFavoriteMovie(it)
         })
     }
 
@@ -49,7 +50,7 @@ class FavoriteActivity : AppCompatActivity() {
         favoriteViewModel = obtainViewModel(this)
     }
 
-    private fun showFavoriteMovie(favMovieList: List<MovieEntity>) {
+    private fun showFavoriteMovie(favMovieList: List<ResultsItem>) {
         if (favMovieList.isNotEmpty()) {
             favoriteAdapter.addItems(favMovieList)
 

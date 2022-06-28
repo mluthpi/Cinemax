@@ -13,8 +13,8 @@ import retrofit2.Response
 
 class MainViewModel: ViewModel() {
 
-    private val _movie = MutableLiveData<List<ResultsItem>>()
-    val movie: LiveData<List<ResultsItem>> = _movie
+    private val _movies = MutableLiveData<List<ResultsItem>>()
+    val movies: LiveData<List<ResultsItem>> = _movies
 
 //    private val _movieDetail = MutableLiveData<MovieDetailsActivity>()
 //    val movieDetail: LiveData<MovieDetailsActivity> = _movieDetail
@@ -22,21 +22,18 @@ class MainViewModel: ViewModel() {
     private val _isLoading = MutableLiveData<Boolean>()
     val isLoading: LiveData<Boolean> = _isLoading
 
-    companion object{
-        private const val TAG = "MainViewModel"
-    }
-
-    private fun listMovie(movie: String) {
+    fun getListMovie(apiKey: String) {
         _isLoading.value = true
-        val client = ApiConfig.getApiService().getMovie(movie)
+
+        val client = ApiConfig.getApiService().getMovie(apiKey)
         client.enqueue(object : Callback<MovieResponse>{
             override fun onResponse(call: Call<MovieResponse>, response: Response<MovieResponse>) {
                 _isLoading.value = false
                 if (response.isSuccessful){
-                    _movie.value = response.body()?.results?: emptyList()
+                    _movies.value = response.body()?.results?: emptyList()
 //                    _movieDetail.value = (response.body()?.results?: ProductionCompaniesItem()) as MovieDetailsActivity
                 } else {
-                    _movie.value = emptyList()
+                    _movies.value = emptyList()
                     Log.e(TAG, "onResponse: ${response.message()}")}
             }
 
@@ -46,6 +43,10 @@ class MainViewModel: ViewModel() {
             }
 
         })
+    }
+
+    companion object{
+        private const val TAG = "MainViewModel"
     }
 
 }

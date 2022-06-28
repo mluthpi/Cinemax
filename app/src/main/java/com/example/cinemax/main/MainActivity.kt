@@ -3,9 +3,11 @@ package com.example.cinemax.main
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.cinemax.R
@@ -23,7 +25,14 @@ class MainActivity : AppCompatActivity() {
 
     private var _binding: ActivityMainBinding? = null
     private val binding get() = _binding!!
-//    private lateinit var mainViewModel: MainViewModel
+
+    private lateinit var mainViewModel: MainViewModel
+
+    private var movieAdapter = MovieAdapter {
+        val intent = Intent(this, MovieDetailsActivity::class.java)
+        intent.putExtra("KEY_ID", it.id)
+        startActivity(intent)
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -31,56 +40,32 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
         supportActionBar?.title = "CINEMAX"
 
-        getMovies()
-
-        val mainViewModel = ViewModelProvider(
+        mainViewModel = ViewModelProvider(
             this, ViewModelProvider.NewInstanceFactory()
-        ).get(MainViewModel::class.java)
+        )[MainViewModel::class.java]
 
-
-
-
-    }
-
-    private fun getMovies() {
-        binding.progressbar.visibility = View.VISIBLE
-        ApiConfig.getApiService().getMovie(apiKey = "ba7b7ec258e912a3c68b34e6dfba3ca5").enqueue(
-            object : Callback<MovieResponse> {
-                override fun onResponse(
-                    call: Call<MovieResponse>,
-                    response: Response<MovieResponse>
-                ) {
-                    val data = response.body()
-                    val movies = data?.results
-                    showMovie(movies!!)
-                    binding.progressbar.visibility = View.GONE
-                }
-
-                override fun onFailure(call: Call<MovieResponse>, t: Throwable) {
-                }
-
-            })
+        mainViewModel.getListMovie(apiKey = "ba7b7ec258e912a3c68b34e6dfba3ca5")
+        mainViewModel.movies.observe(this, {
+            showMovie(it)
+        })
+        mainViewModel.isLoading.observe(this, { isLoading ->
+            showLoading(isLoading)
+        })
     }
 
     private fun showMovie(movies: List<ResultsItem>?) {
-        val movieAdapter = MovieAdapter {
-            val intent = Intent(this, MovieDetailsActivity::class.java)
-            intent.putExtra("KEY_ID", it.id)
-            startActivity(intent)
-        }
-
         if (movies != null) {
             movieAdapter.addItems(movies)
-        }
-        binding.rvMovies.apply {
-            layoutManager = LinearLayoutManager(this@MainActivity)
-            adapter = movieAdapter
+            binding.rvMovies.apply {
+                layoutManager = LinearLayoutManager(this@MainActivity)
+                adapter = movieAdapter
+            }
         }
     }
 
-//    private fun showLoading(isLoading:Boolean) {
-//        binding.progressbar.visibility = if(isLoading) View.VISIBLE else View.GONE
-//    }
+    private fun showLoading(isLoading:Boolean) {
+        binding.progressbar.visibility = if(isLoading) View.VISIBLE else View.GONE
+    }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         menuInflater.inflate(R.menu.menu_main, menu)
