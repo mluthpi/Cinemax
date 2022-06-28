@@ -28,7 +28,7 @@ class MovieDetailsActivity : AppCompatActivity() {
         val id = intent.getIntExtra("KEY_ID", 0)!!
         getMovieDetails(id = id)
 
-        setupViewModel()
+//        setupViewModel()
 
         detailsViewModel.detailMovie.observe(this, {movieDetails ->
             showMovieDetail(movieDetails)
@@ -38,9 +38,9 @@ class MovieDetailsActivity : AppCompatActivity() {
     }
 
 
-    private fun setupViewModel() {
-        detailsViewModel = obtainViewModel(this)
-    }
+//    private fun setupViewModel() {
+//        detailsViewModel = obtainViewModel(this)
+//    }
 
     private fun getMovieDetails(id: Int) {
         ApiConfig.getApiService().getDetails(id = Int, apiKey = "ba7b7ec258e912a3c68b34e6dfba3ca5")
@@ -110,10 +110,10 @@ class MovieDetailsActivity : AppCompatActivity() {
     }
 
 
-    private fun obtainViewModel(activity: AppCompatActivity) : DetailsViewModel {
-        val factory = ViewModelFactory.getInstance(activity.application)
-        return ViewModelProvider(activity, factory).get(DetailsViewModel::class.java)
-    }
+//    private fun obtainViewModel(activity: AppCompatActivity) : DetailsViewModel {
+//        val factory = ViewModelFactory.getInstance(activity.application)
+//        return ViewModelProvider(activity, factory).get(DetailsViewModel::class.java)
+//    }
 
     override fun onDestroy() {
         super.onDestroy()

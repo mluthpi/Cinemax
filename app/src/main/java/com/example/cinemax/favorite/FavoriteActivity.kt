@@ -37,7 +37,7 @@ class FavoriteActivity : AppCompatActivity() {
         setupViewModel()
 
         favoriteViewModel.getFavoriteMovie().observe(this, {
-            showFavoriteMovie(it)
+//            showFavoriteMovie(it)
         })
     }
 
